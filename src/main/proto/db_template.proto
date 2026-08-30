@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option java_package = "org.scaven.database.proto";
+option java_multiple_files = true;
+
+message Table{
+  string name = 1;
+  repeated Column columns = 2;
+  repeated Row rows = 3;
+}
+
+message Column{
+  string name = 1;
+  DataType type = 2;
+  //bool isPrimaryKey = 3;
+
+}
+
+message Row{
+  repeated string values = 1;
+}
+
+enum DataType{
+  UNKNOWN = 0;
+  INT = 1;
+  STRING = 2;
+  DOUBLE = 3;
+  BOOLEAN = 4;
+}
