@@ -1,29 +1,31 @@
 package org.scaven;
 
-import org.scaven.models.Column;
-import org.scaven.models.Datatype;
-import org.scaven.models.Row;
-import org.scaven.models.Table;
+import org.scaven.database.proto.Table;
 
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
     static void main() {
-        Table table = new Table("Student");
 
-        table.addColumn(new Column("id", Datatype.INT));
-        table.addColumn(new Column("name", Datatype.STRING));
-        table.addColumn(new Column("age", Datatype.INT));
+        Table t = Table.newBuilder().setName("students").build();
+        System.out.println(t.getName());
 
-        table.addRow(new Row(List.of(1, "Lando", 29)));
-        table.addRow(new Row(List.of(2, "Oscar", 17)));
-        table.addRow(new Row(List.of(3, "Max", 32)));
 
-        System.out.println("Table name is: " + table.getTableName());
-        System.out.println("Column name is: " + table.getColumns());
-        System.out.println("Row name is: " + table.getRows());
+        byte[] data = t.toByteArray();
+
+        System.out.println(data.length);
+        System.out.println(data.toString());
+
+        try {
+            Files.createDirectories(Paths.get("./generated_db"));
+            Files.write(Path.of("./generated_db/students.bin"), data);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 }
-
-//TODO: Create test cases to test models

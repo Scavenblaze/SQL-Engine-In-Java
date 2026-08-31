@@ -60,4 +60,4 @@ public class ColumnTest {
 }
 
 //TODO: remove the assertEquals repetition by putting it in a loop
-//TODO: Add more test cases like no columns, one column, etc
+//TODO: Add more org.scaven.test cases like no columns, one column, etc
