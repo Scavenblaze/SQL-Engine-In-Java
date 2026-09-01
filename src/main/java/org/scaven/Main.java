@@ -1,30 +1,55 @@
 package org.scaven;
 
-import org.scaven.database.proto.Table;
 
+
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
+
 
 public class Main {
     static void main() {
 
-        Table t = Table.newBuilder().setName("students").build();
-        System.out.println(t.getName());
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 
-        byte[] data = t.toByteArray();
-
-        System.out.println(data.length);
-        System.out.println(data.toString());
-
+        //temp
+        System.out.println("Enter: ");
         try {
-            Files.createDirectories(Paths.get("./generated_db"));
-            Files.write(Path.of("./generated_db/students.bin"), data);
-        } catch (IOException e) {
+
+            String[] userQuery = br.readLine().toLowerCase().split(" ");
+            System.out.println("Thing is " + userQuery);
+
+            for (String query : userQuery) {
+                switch (query) {
+                    case "select":
+                        System.out.println("select selected");
+                        break;
+                    case "insert":
+                        System.out.println("insert selected");
+                        break;
+                    case "update":
+                        System.out.println("update selected");
+                        break;
+                    case "delete":
+                        System.out.println("delete selected");
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+
+        }catch (IOException e){
             throw new RuntimeException(e);
         }
+
+
+
+
+
+//TODO: TEST: user input query -> output using the new token types
 
 
     }
