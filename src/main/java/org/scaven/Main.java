@@ -2,9 +2,13 @@ package org.scaven;
 
 
 
+import org.scaven.sql.Token;
+import org.scaven.sql.Tokenizer;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 
 public class Main {
@@ -12,38 +16,20 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+        Tokenizer tokenizer = new Tokenizer("SELECT name, age FROM students WHERE age > 18;");
+        List<Token> thing = tokenizer.tokenize();
+        System.out.println(thing.toString());
 
-        //temp
-        System.out.println("Enter: ");
-        try {
-
-            String[] userQuery = br.readLine().toLowerCase().split(" ");
-            System.out.println("Thing is " + userQuery);
-
-            for (String query : userQuery) {
-                switch (query) {
-                    case "select":
-                        System.out.println("select selected");
-                        break;
-                    case "insert":
-                        System.out.println("insert selected");
-                        break;
-                    case "update":
-                        System.out.println("update selected");
-                        break;
-                    case "delete":
-                        System.out.println("delete selected");
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-
-
-        }catch (IOException e){
-            throw new RuntimeException(e);
-        }
+//        try {
+//            System.out.println("Enter: ");
+//            String[] userQuery = br.readLine().toLowerCase().split(" ");
+//            System.out.println("Thing is " + userQuery);
+//
+//
+//
+//        }catch (IOException e){
+//            throw new RuntimeException(e);
+//        }
 
 
 
