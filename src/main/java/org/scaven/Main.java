@@ -16,7 +16,7 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        Tokenizer tokenizer = new Tokenizer("SELECT name, age FROM students WHERE age > 18;");
+        Tokenizer tokenizer = new Tokenizer("SELECT * FROM students WHERE age > 18;");
         List<Token> thing = tokenizer.tokenize();
         System.out.println(thing.toString());
 
@@ -35,7 +35,7 @@ public class Main {
 
 
 
-//TODO: TEST: user input query -> output using the new token types
+//TODO: Use the statements in the SQL Parser
 
 
     }
