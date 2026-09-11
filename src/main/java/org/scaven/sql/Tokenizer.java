@@ -21,7 +21,7 @@ public class Tokenizer {
     private final String input;
     private int position;
 
-    private final Map<String, TokenType> KEYWORDS =  Map.ofEntries(
+    private static final Map<String, TokenType> KEYWORDS =  Map.ofEntries(
             Map.entry("SELECT", TokenType.SELECT),
             Map.entry("FROM", TokenType.FROM),
             Map.entry("WHERE", TokenType.WHERE),
@@ -32,8 +32,13 @@ public class Tokenizer {
             Map.entry("TABLE", TokenType.TABLE),
             Map.entry("DELETE", TokenType.DELETE),
             Map.entry("ORDER", TokenType.ORDER),
-            Map.entry("BY", TokenType.BY)
-    );
+            Map.entry("BY", TokenType.BY),
+
+            Map.entry("INT", TokenType.INT),
+            Map.entry("STRING", TokenType.STRING),
+            Map.entry("DOUBLE", TokenType.DOUBLE),
+            Map.entry("BOOLEAN", TokenType.BOOLEAN)
+            );
 
     public Tokenizer(String input) {
         this.input = input;

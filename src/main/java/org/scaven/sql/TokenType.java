@@ -13,9 +13,13 @@ public enum TokenType {
     ORDER,
     BY,
 
+    INT,
+    STRING,
+    DOUBLE,
+    BOOLEAN,
+
     IDENTIFIER,
     INTEGER,
-    STRING,
 
     COMMA,
     SEMICOLON,

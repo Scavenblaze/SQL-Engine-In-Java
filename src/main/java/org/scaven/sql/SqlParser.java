@@ -156,19 +156,29 @@ public class SqlParser {
         return new CreateStatement(tableName, columnNames, columnTypes);
     }
 
+    private Datatype parseDataType() {
+        Token token = tokens.get(position);
+
+        position++;
+
+        return switch (token.type()) {
+            case INT -> Datatype.INT;
+            case STRING -> Datatype.STRING;
+            case DOUBLE -> Datatype.DOUBLE;
+            case BOOLEAN -> Datatype.BOOLEAN;
+
+            default -> throw new IllegalArgumentException(
+                    "Unexpected Datatype found: " + token
+            );
+        };
+    }
+
     private void parseColumnDefinition(List<String> columnNames, List<Datatype> columnTypes) {
         String columnName = consume(TokenType.IDENTIFIER).value();
-        String typeName =  consume(TokenType.IDENTIFIER).value();
-        Datatype dataType;
-
-        try{
-            dataType = Datatype.valueOf(typeName.toUpperCase());
-        }catch(IllegalArgumentException e){
-            throw new IllegalArgumentException("Unknown DataType found: "+ typeName);
-        }
+        Datatype datatype = parseDataType();
 
         columnNames.add(columnName);
-        columnTypes.add(dataType);
+        columnTypes.add(datatype);
     }
 
     private DeleteStatement parseDelete() {
