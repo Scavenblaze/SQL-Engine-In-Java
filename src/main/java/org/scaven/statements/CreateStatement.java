@@ -1,11 +1,11 @@
 package org.scaven.statements;
 
-import org.scaven.database.proto.DataType;
+import org.scaven.models.Datatype;
 
 import java.util.List;
 
 public record CreateStatement(
         String tableName,
         List<String> columnNames,
-        List<DataType> columnTypes
+        List<Datatype> columnTypes
 ) implements Statement {}

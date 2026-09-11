@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/*
+/* Example Output
 SELECT          → Token(SELECT, SELECT)
 name            → Token(IDENTIFIER, "name")
 ,               → Token(COMMA, ",")
@@ -47,8 +47,6 @@ public class Tokenizer {
         List<Token> tokens = new ArrayList<>();
 
         while(position < input.length()) {
-//            System.out.println("position = " + position);
-//            System.out.println("current = " + input.charAt(position));
             if (Character.isWhitespace(input.charAt(position))){
                 position++;
             }
@@ -96,6 +94,7 @@ public class Tokenizer {
     }
 
     private Token readString(){
+        position++; //skips opening '
         int  start = position;
 
         while (position < input.length() && input.charAt(position) != '\''){

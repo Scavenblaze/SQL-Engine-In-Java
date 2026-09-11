@@ -2,40 +2,41 @@ package org.scaven;
 
 
 
+import org.scaven.sql.SqlParser;
 import org.scaven.sql.Token;
 import org.scaven.sql.Tokenizer;
+import org.scaven.statements.Statement;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 
 
 public class Main {
     static void main() {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        //String query = "SELECT age FROM students WHERE age > 10 ORDER BY age";
+        //String query = "insert into students values(1, 'DouglasDouglas', 34);";
+        //String query = "create table students(id int, name string, age int);";
+        String query = "delete from students where age < 18;";
 
-        Tokenizer tokenizer = new Tokenizer("SELECT * FROM students WHERE age > 18;");
-        List<Token> thing = tokenizer.tokenize();
-        System.out.println(thing.toString());
+        Tokenizer tokenizer = new Tokenizer(query);
+        List<Token> tokens = tokenizer.tokenize();
 
-//        try {
-//            System.out.println("Enter: ");
-//            String[] userQuery = br.readLine().toLowerCase().split(" ");
-//            System.out.println("Thing is " + userQuery);
-//
-//
-//
-//        }catch (IOException e){
-//            throw new RuntimeException(e);
-//        }
+        System.out.println("TOKENS: ");
+        for (Token token : tokens) {
+            System.out.println(token);
+        }
 
+        SqlParser parser = new SqlParser(tokens);
+        Statement statement = parser.parse();
+
+        System.out.println("\nParsed Statements: ");
+        System.out.println(statement);
 
 
 
 
-//TODO: Use the statements in the SQL Parser
+
+//TODO: Query Execution and Storage
 
 
     }
