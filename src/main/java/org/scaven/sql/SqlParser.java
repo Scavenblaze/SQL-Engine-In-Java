@@ -19,14 +19,24 @@ public class SqlParser {
             throw new IllegalStateException("No tokens in SqlParser");
         }
 
-        return switch(tokens.get(position).type()){
-            case SELECT ->  parseSelect();
-            case INSERT ->  parseInsert();
-            case CREATE ->  parseCreateTable();
-            case DELETE ->  parseDelete();
+        Statement statement = switch (tokens.get(position).type()) {
+            case SELECT -> parseSelect();
+            case INSERT -> parseInsert();
+            case CREATE -> parseCreateTable();
+            case DELETE -> parseDelete();
             default -> throw new IllegalArgumentException("Unexpected Token: " + tokens.get(position));
-
         };
+
+        // Consume any optional trailing semicolons
+        while (match(TokenType.SEMICOLON)) {
+            // keep consuming
+        }
+
+        if (position < tokens.size()) {
+            throw new IllegalArgumentException("Unexpected token after statement: " + tokens.get(position));
+        }
+
+        return statement;
     }
 
     private SelectStatement parseSelect() {
@@ -103,7 +113,7 @@ public class SqlParser {
         Token token = tokens.get(position);
 
         return switch(token.type()){
-            case STRING, INTEGER -> {
+            case STRING, INTEGER, DOUBLE_LITERAL, IDENTIFIER -> {
                 position++;
                 yield token.value();
             }
@@ -167,9 +177,7 @@ public class SqlParser {
             case DOUBLE -> Datatype.DOUBLE;
             case BOOLEAN -> Datatype.BOOLEAN;
 
-            default -> throw new IllegalArgumentException(
-                    "Unexpected Datatype found: " + token
-            );
+            default -> throw new IllegalArgumentException("Unexpected Datatype found: " + token);
         };
     }
 
