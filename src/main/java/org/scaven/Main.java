@@ -14,9 +14,9 @@ public class Main {
     static void main() {
 
         //String query = "SELECT age FROM students WHERE age > 10 ORDER BY age";
-        //String query = "insert into students values(1, 'DouglasDouglas', 34);";
-        String query = "create table students(id int, name string, age int, thing boolean, thing2 double);";
-        //String query = "delete from students where age < 18;";
+        //String query = "insert into students values(1, 'DouglasDouglas', -34);";
+        //String query = "create table students(id int, name string, age int, thing boolean, thing2 double);";
+        //String query = "delete from students where age < 18.2;";
 
         Tokenizer tokenizer = new Tokenizer(query);
         List<Token> tokens = tokenizer.tokenize();
@@ -36,7 +36,7 @@ public class Main {
 
 
 
-//TODO: Query Execution and Storage
+//TODO: Query Execution
 
 
     }

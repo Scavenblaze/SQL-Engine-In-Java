@@ -33,12 +33,14 @@ public class Tokenizer {
             Map.entry("DELETE", TokenType.DELETE),
             Map.entry("ORDER", TokenType.ORDER),
             Map.entry("BY", TokenType.BY),
+            Map.entry("AND", TokenType.AND),
+            Map.entry("OR", TokenType.OR),
 
             Map.entry("INT", TokenType.INT),
             Map.entry("STRING", TokenType.STRING),
             Map.entry("DOUBLE", TokenType.DOUBLE),
             Map.entry("BOOLEAN", TokenType.BOOLEAN)
-            );
+    );
 
     public Tokenizer(String input) {
         this.input = input;
@@ -52,16 +54,17 @@ public class Tokenizer {
         List<Token> tokens = new ArrayList<>();
 
         while(position < input.length()) {
-            if (Character.isWhitespace(input.charAt(position))){
+            char current  = input.charAt(position);
+            if (Character.isWhitespace(current)) {
                 position++;
             }
-            else if(Character.isLetter(input.charAt(position))){
+            else if(Character.isLetter(current) || current=='_') {
                 tokens.add(readWord());
             }
-            else if(Character.isDigit(input.charAt(position))){
-                tokens.add(readNumber());
+            else if(Character.isDigit(current) ||  current=='-' && position + 1 < input.length() && Character.isDigit(input.charAt(position + 1))) {
+                tokens.add(readNumber()); //positive or negative
             }
-            else if(input.charAt(position) == '\''){
+            else if(current == '\''){
                 tokens.add(readString());
             }
             else{
@@ -74,7 +77,7 @@ public class Tokenizer {
     private Token readWord(){
         int start = position;
 
-        while(position < input.length() && Character.isLetterOrDigit(input.charAt(position))){
+        while(position < input.length() && (Character.isLetterOrDigit(input.charAt(position)) || input.charAt(position) == '_')){
             position++;
         }
 
@@ -90,12 +93,24 @@ public class Tokenizer {
 
     private Token readNumber(){
         int start = position;
+        if (input.charAt(position) == '-') {
+            position++;
+        }
+        boolean hasDecimal = false;
 
-        while(position < input.length() && Character.isDigit(input.charAt(position))){
+        while (position < input.length() && (Character.isDigit(input.charAt(position)) || input.charAt(position) == '.')) {
+            if (input.charAt(position) == '.') {
+                if (hasDecimal) {
+                    throw new IllegalStateException("Invalid number: multiple decimal points at position " + position);
+                }
+                hasDecimal = true;
+            }
             position++;
         }
 
-        return new Token(input.substring(start, position), TokenType.INTEGER);
+        String number = input.substring(start, position);
+        TokenType type = hasDecimal ? TokenType.DOUBLE_LITERAL : TokenType.INTEGER;
+        return new Token(number, type);
     }
 
     private Token readString(){

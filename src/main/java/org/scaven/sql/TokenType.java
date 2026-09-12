@@ -12,6 +12,8 @@ public enum TokenType {
     DELETE,
     ORDER,
     BY,
+    AND,
+    OR,
 
     INT,
     STRING,
@@ -20,6 +22,7 @@ public enum TokenType {
 
     IDENTIFIER,
     INTEGER,
+    DOUBLE_LITERAL,
 
     COMMA,
     SEMICOLON,
