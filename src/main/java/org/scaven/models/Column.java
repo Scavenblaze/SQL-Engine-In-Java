@@ -1,12 +1,11 @@
 package org.scaven.models;
 
-import java.io.Serializable;
 
 // Column will take input of Column Name and its datatype
-public class Column implements Serializable {
+public class Column{
 
-    private String columnName;
-    private Datatype type;
+    private final String columnName;
+    private final Datatype type;
 
     public Column(String columnName, Datatype type) {
         this.columnName = columnName;

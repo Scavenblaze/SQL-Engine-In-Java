@@ -1,12 +1,12 @@
 package org.scaven.models;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Table implements Serializable {
-    private List<Column> columns =  new ArrayList<Column>();
-    private List<Row> rows = new ArrayList<Row>();
+public class Table{
+    private List<Column> columns =  new ArrayList<>();
+    private List<Row> rows = new ArrayList<>();
     private String tableName;
 
     public Table(String tableName) {
@@ -28,6 +28,20 @@ public class Table implements Serializable {
     }
     public void addRow(Row row) {
         rows.add(row);
+    }
+
+    //Returns index of the column with the given name
+    public int getColumnIndex(String columnName) {
+        for (int i = 0; i < columns.size(); i++) {
+            if (columns.get(i).getColumnName().equalsIgnoreCase(columnName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void removeRow(int index) {
+        rows.remove(index);
     }
 
     @Override
