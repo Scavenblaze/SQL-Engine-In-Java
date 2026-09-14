@@ -1,4 +1,5 @@
 package org.scaven.execution;
 
-public interface Executor {
+public interface Executor{
+    String execute();
 }

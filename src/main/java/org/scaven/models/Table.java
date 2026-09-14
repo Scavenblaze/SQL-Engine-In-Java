@@ -39,7 +39,7 @@ public class Table{
         }
         return -1;
     }
-
+    
     public void removeRow(int index) {
         rows.remove(index);
     }

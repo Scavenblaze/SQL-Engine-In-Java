@@ -7,16 +7,24 @@ import org.scaven.storage.StorageEngine;
 
 public class CreateExecutor implements Executor{
     private final StorageEngine storageEngine;
+    private final CreateStatement statement;
 
-    public CreateExecutor(StorageEngine storageEngine) {
+    public CreateExecutor(StorageEngine storageEngine, CreateStatement statement){
         this.storageEngine = storageEngine;
+        this.statement = statement;
     }
 
-    public void execute(CreateStatement statement) {
+    @Override
+    public String execute(){
+        String tableName = statement.tableName();
 
-        Table table = new Table(statement.tableName());
+        if(storageEngine.tableExists(tableName)){
+            throw new IllegalStateException("Table '" + tableName + "' exists");
+        }
 
-        for (int i = 0; i < statement.columnNames().size(); i++) {
+        Table table = new Table(tableName);
+
+        for(int i = 0; i < statement.columnNames().size(); i++){
 
             Column column = new Column(
                     statement.columnNames().get(i),
@@ -27,5 +35,6 @@ public class CreateExecutor implements Executor{
         }
 
         storageEngine.saveTable(table);
+        return "Table '" + tableName + "' created successfully with " + table.getColumns().size() + " columns";
     }
 }
